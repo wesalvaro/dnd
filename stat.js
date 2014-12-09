@@ -178,8 +178,8 @@ stat.factory('profile', function(stats, skills, savingThrows, $rootScope) {
       if (data.stats) angular.copy(data.stats, stats);
       if (data.savingThrows) angular.copy(data.savingThrows, savingThrows);
       angular.forEach(skills, function(skill) {
-        skill.proficient = data.skills[skill.name].proficient || false;
-        skill.doubleProficient = data.skills[skill.name].doubleProficient || false;
+        skill.proficient = !!data.skills[skill.name].proficient;
+        skill.doubleProficient = !!data.skills[skill.name].doubleProficient;
       });
       service.email = authData.password.email;
       service.password = 'password';
