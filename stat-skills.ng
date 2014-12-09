@@ -6,7 +6,7 @@
   </div>
   <div class="three column row"
        ng-repeat="skill in skills | orderBy: predicate">
-    <div class="center aligned one wide column skill-mod">
+    <div class="center aligned one wide column">
       <div class="ui large header">{{ mod(skill) }}</div>
     </div>
     <div class="ten wide column">
