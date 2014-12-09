@@ -2,4 +2,7 @@
     .button {
         display: none !important;
     }
+    .no-print {
+        display: none;
+    }
 }
