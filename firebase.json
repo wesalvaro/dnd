@@ -1,0 +1,9 @@
+{
+  "firebase": "dnd5e",
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

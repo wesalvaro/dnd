@@ -1,0 +1,27 @@
+<div class="ui page grid" ng-init="predicate='name'">
+  <div class="sixteen wide column">
+    <a ng-click="predicate='name'">name</a>
+    |
+    <a ng-click="predicate='stat'">stat</a>
+  </div>
+  <div class="three column row"
+       ng-repeat="skill in skills | orderBy: predicate">
+    <div class="center aligned one wide column skill-mod">
+      <div class="ui large header">{{ mod(skill) }}</div>
+    </div>
+    <div class="ten wide column">
+      <input type="checkbox" ng-model="skill.proficient">
+      <input type="checkbox"
+             ng-model="skill.doubleProficient"
+             ng-if="skill.proficient">
+      <span class="ui tiny header">{{ skill.name }}</span>
+      <span class="ui tiny header disabled">{{ skill.stat }}</span>
+    </div>
+    <div class="four wide column">
+      <span roll
+            what="{{skill.stat}}"
+            proficient="skill.proficient"
+            double-proficient="skill.doubleProficient"></span>
+    </div>
+  </div>
+</div>

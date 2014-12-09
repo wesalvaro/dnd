@@ -1,0 +1,6 @@
+<div>
+  <form ng-show="!locked" ng-submit="lock()">
+    <input type="{{ type }}" ng-model="value" ng-blur="lock()">
+  </form>
+  <div ng-show="locked" ng-click="unlock()">{{ value }}</div>
+</div>

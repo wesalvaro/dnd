@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title>DND</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.1.2/semantic.min.css">
+    <link rel="stylesheet" href="dnd.css">
+    <link media="print" rel="stylesheet" href="print.css">
+    <script src="https://cdn.firebase.com/js/client/2.0.6/firebase.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.js"></script>
+    <script src="stat.js"></script>
+    <script src="dnd.js"></script>
+  </head>
+  <body ng-app="dnd" ng-cloak>
+    <div class="ui statistics stackable page grid">
+      <div stat name="str"></div>
+      <div stat name="dex"></div>
+      <div stat name="int"></div>
+      <div stat name="cha"></div>
+      <div stat name="wis"></div>
+      <div stat name="con"></div>
+      <div stat name="ac"></div>
+    </div>
+    <div skillz></div>
+    <div class="ui segment">
+      <form class="ui form" ng-submit="profile.login()" ng-controller="sync">
+        <div class="two fields">
+          <div class="field">
+            <label>Email</label>
+            <input type="text" placeholder="Email" ng-model="profile.email">
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" placeholder="Password" ng-model="profile.password">
+          </div>
+        </div>
+        <button class="ui primary button">Login</button>
+        <button class="ui secondary button" type="button" ng-click="profile.save()">Save</button>
+      </form>
+    </div>
+  </body>
+</html>
