@@ -96,20 +96,6 @@ stat.directive('stat', function(stats, modCalc, $rootScope) {
       } else {
         s.mod = modCalc.bind(this, s.name);
       }
-      s.$watch('value', function(value) {
-        if (update) return;
-        stats[s.name] = value;
-        $rootScope.$broadcast('STAT_CHANGE', s.name);
-        console.log('changed');
-        update = false;
-      });
-      s.$on('STAT_CHANGE', function(evt, statName) {
-        console.log('STAT_CHANGE', statName, s.name);
-        if (statName == s.name) {
-          s.value = stats[s.name];
-          update = true;
-        }
-      });
     }
   }
 });
@@ -123,7 +109,7 @@ stat.directive('skillz', function(skills, modCalc) {
       s.skills = skills;
       s.mod = function(skill) {
         return modCalc(skill.stat, skill.proficient, skill.doubleProficient);
-      }
+      };
     }
   };
 });
@@ -153,10 +139,11 @@ stat.factory('profile', function(stats, skills, savingThrows, $rootScope) {
   var user;
   var ref = new Firebase("https://dnd5e.firebaseio.com");
   var service = {
-    login: function(email, pass) {
+    login: function() {
+      if (user) return;
       ref.authWithPassword({
-        email: email,
-        password: pass
+        email: service.email,
+        password: service.password
       }, function(err, authData) {
         console.log(err, authData);
       });
@@ -182,13 +169,17 @@ stat.factory('profile', function(stats, skills, savingThrows, $rootScope) {
   ref.onAuth(function(authData) {
     console.log(authData);
     user = authData;
+    if (authData == null) {
+      service.email = service.password = '';
+      return;
+    }
     ref.child('users').child(user.uid).on('value', function(snapshot) {
       var data = snapshot.val();
-      angular.copy(data.stats, stats);
-      angular.copy(data.savingThrows, savingThrows);
+      if (data.stats) angular.copy(data.stats, stats);
+      if (data.savingThrows) angular.copy(data.savingThrows, savingThrows);
       angular.forEach(skills, function(skill) {
-        skill.proficient = data.skills[skill.name].proficient;
-        skill.doubleProficient = data.skills[skill.name].doubleProficient;
+        skill.proficient = data.skills[skill.name].proficient || false;
+        skill.doubleProficient = data.skills[skill.name].doubleProficient || false;
       });
       service.email = authData.password.email;
       service.password = 'password';
